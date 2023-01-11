@@ -1,11 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="WiredRaspberrypi@172.17.21.2:22 (28)" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="WiredRaspberrypi@172.17.21.2:22 (37)" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
       <paths name="WiredRaspberrypi@172.17.21.2:22 (28)">
         <serverdata>
           <mappings>
             <mapping deploy="/tmp/pycharm_project_767" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="WiredRaspberrypi@172.17.21.2:22 (29)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/pycharm_project_422" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="WiredRaspberrypi@172.17.21.2:22 (30)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/pycharm_project_384" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="WiredRaspberrypi@172.17.21.2:22 (31)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/pycharm_project_283" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="WiredRaspberrypi@172.17.21.2:22 (32)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/pycharm_project_613" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="WiredRaspberrypi@172.17.21.2:22 (33)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/pycharm_project_896" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="WiredRaspberrypi@172.17.21.2:22 (34)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/pycharm_project_361" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="WiredRaspberrypi@172.17.21.2:22 (35)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/pycharm_project_893" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="WiredRaspberrypi@172.17.21.2:22 (36)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/pycharm_project_83" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="WiredRaspberrypi@172.17.21.2:22 (37)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/pycharm_project_726" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>
