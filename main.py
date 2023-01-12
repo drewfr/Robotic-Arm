@@ -86,6 +86,7 @@ class MainScreen(Screen):
     armPosition = 0
     lastClick = time.clock()
 
+
     def __init__(self, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
         self.initialize()
@@ -104,10 +105,12 @@ class MainScreen(Screen):
 
         if self.count2 % 2 == 0:
             cyprus.set_pwm_values(2, period_value=100000, compare_value=100000, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+            sleep(.5)
             self.count2 = self.count2 + 1
             print("up")
         else:
             cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+            sleep(.5)
             self.count2 = self.count2 + 1
             print("down")
         print("Process arm movement here")
@@ -115,17 +118,28 @@ class MainScreen(Screen):
     def toggleMagnet(self):
         if self.count % 2 == 0:
             cyprus.set_pwm_values(1, period_value=100000, compare_value=50000, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
-            self.count = self.count + 1
-            print("Magnet ON")
-        else:
-            cyprus.set_pwm_values(1, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+            sleep(.5)
             self.count = self.count + 1
             print("Magnet OFF")
+        else:
+            cyprus.set_pwm_values(1, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+            sleep(.5)
+            self.count = self.count + 1
+            print("Magnet ON")
 
         print("Process magnet here")
 
     def auto(self):
         print("Run the arm automatically here")
+
+        self.toggleArm()
+        self.toggleMagnet()
+        self.toggleArm()
+        arm.goTo(upperTowerPosition)
+        sleep(.5)
+        self.toggleArm()
+        self.toggleMagnet()
+        self.toggleArm()
 
     def setArmPosition(self, position):
         arm.goTo(int(position) * 100)
