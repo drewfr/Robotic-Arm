@@ -31,7 +31,6 @@ import RPi.GPIO as GPIO
 from pidev.stepper import stepper
 from pidev.Cyprus_Commands import Cyprus_Commands_RPi as cyprus
 
-
 # ////////////////////////////////////////////////////////////////
 # //                      GLOBAL VARIABLES                      //
 # //                         CONSTANTS                          //
@@ -49,8 +48,8 @@ COUNTERCLOCKWISE = 1
 ARM_SLEEP = 2.5
 DEBOUNCE = 0.10
 
-lowerTowerPosition = 60
-upperTowerPosition = 76
+lowerTowerPosition = 60  # position of the lower tower
+upperTowerPosition = 76  # position of the upper tower
 
 
 # ////////////////////////////////////////////////////////////////
@@ -76,6 +75,8 @@ cyprus.open_spi()
 sm = ScreenManager()
 arm = stepper(port=0, micro_steps=32, hold_current=20, run_current=20, accel_current=20, deaccel_current=20,
               steps_per_unit=200, speed=1)
+
+
 # ////////////////////////////////////////////////////////////////
 # //                       MAIN FUNCTIONS                       //
 # //             SHOULD INTERACT DIRECTLY WITH HARDWARE         //
@@ -86,12 +87,13 @@ class MainScreen(Screen):
     armPosition = 0
     lastClick = time.clock()
 
-
     def __init__(self, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
         self.initialize()
         self.count = 0
         self.count2 = 0
+        self.ballPosition = 0
+        self.toggleMagnet()
 
     def debounce(self):
         processInput = False
@@ -103,6 +105,19 @@ class MainScreen(Screen):
 
     def toggleArm(self):
 
+        if self.count2 % 2 == 0:
+            cyprus.set_pwm_values(2, period_value=100000, compare_value=100000, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+            sleep(.5)
+            self.count2 = self.count2 + 1
+            print("up")
+        else:
+            cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
+            sleep(.5)
+            self.count2 = self.count2 + 1
+            print("down")
+        print("Process arm movement here")
+
+    def toggleSmallArm(self):
         if self.count2 % 2 == 0:
             cyprus.set_pwm_values(2, period_value=100000, compare_value=100000, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
             sleep(.5)
@@ -132,21 +147,56 @@ class MainScreen(Screen):
     def auto(self):
         print("Run the arm automatically here")
 
+        andrew = False
+
+        if cyprus.read_gpio() & 0b0010:
+            self.setArmPosition(lowerTowerPosition)
+            sleep(2)
+            andrew = True
+        else:
+            self.setArmPosition(upperTowerPosition)
+            sleep(2)
+
+        print("Ball has been located")
+
         self.toggleArm()
+        sleep(.5)
         self.toggleMagnet()
-        self.toggleArm()
-        arm.goTo(upperTowerPosition)
         sleep(.5)
         self.toggleArm()
-        self.toggleMagnet()
-        self.toggleArm()
+        sleep(.5)
+
+        print("The Package is secure")
+
+        if not andrew:
+            self.setArmPosition(upperTowerPosition)
+            sleep(.5)
+            self.toggleSmallArm()
+            sleep(.5)
+            self.toggleMagnet()
+            sleep(.5)
+            self.toggleSmallArm()
+        else:
+            self.setArmPosition(lowerTowerPosition)
+            sleep(.5)
+            self.toggleArm()
+            sleep(.5)
+            self.toggleMagnet()
+            sleep(.5)
+            self.toggleArm()
 
     def setArmPosition(self, position):
         arm.goTo(int(position) * 100)
         print("Move arm here")
 
+    def setArmPositionUpper(self):
+        self.setArmPosition(upperTowerPosition)
+
+    def setArmPositionLower(self):
+        self.setArmPosition(lowerTowerPosition)
+
     def homeArm(self):
-        arm.go_until_press(0, 200)
+        arm.go_until_press(0, 6400)
         print("start position logged")
         # arm.home(self.homeDirection)
 
@@ -154,6 +204,7 @@ class MainScreen(Screen):
     def isBallOnTallTower(self):
         if cyprus.read_gpio() & 0b0010:
             print("ball is on the short tower")
+            self.ballPosition = 1
         else:
             print("ball is not on short tower")
 
@@ -163,13 +214,13 @@ class MainScreen(Screen):
     def isBallOnShortTower(self):
         if cyprus.read_gpio() & 0b0001:
             print("ball is on tall tower")
+            self.ballPosition = 2
         else:
             print("ball is not on tall tower")
 
         print("Determine if ball is on the bottom tower")
 
     def initialize(self):
-        cyprus.set_pwm_values(1, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
         arm.goTo(0)
         print("Home arm and turn off magnet")
 
