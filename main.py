@@ -48,8 +48,8 @@ COUNTERCLOCKWISE = 1
 ARM_SLEEP = 2.5
 DEBOUNCE = 0.10
 
-lowerTowerPosition = 60  # position of the lower tower
-upperTowerPosition = 76  # position of the upper tower
+lowerTowerPosition = 54  # position of the lower tower
+upperTowerPosition = 32  # position of the upper tower
 
 
 # ////////////////////////////////////////////////////////////////
@@ -95,6 +95,10 @@ class MainScreen(Screen):
         self.ballPosition = 0
         self.toggleMagnet()
 
+
+
+
+
     def debounce(self):
         processInput = False
         currentTime = time.clock()
@@ -105,19 +109,6 @@ class MainScreen(Screen):
 
     def toggleArm(self):
 
-        if self.count2 % 2 == 0:
-            cyprus.set_pwm_values(2, period_value=100000, compare_value=100000, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
-            sleep(.5)
-            self.count2 = self.count2 + 1
-            print("up")
-        else:
-            cyprus.set_pwm_values(2, period_value=100000, compare_value=0, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
-            sleep(.5)
-            self.count2 = self.count2 + 1
-            print("down")
-        print("Process arm movement here")
-
-    def toggleSmallArm(self):
         if self.count2 % 2 == 0:
             cyprus.set_pwm_values(2, period_value=100000, compare_value=100000, compare_mode=cyprus.LESS_THAN_OR_EQUAL)
             sleep(.5)
@@ -149,7 +140,7 @@ class MainScreen(Screen):
 
         andrew = False
 
-        if cyprus.read_gpio() & 0b0010:
+        if cyprus.read_gpio() & 0b0001:
             self.setArmPosition(lowerTowerPosition)
             sleep(2)
             andrew = True
@@ -164,21 +155,22 @@ class MainScreen(Screen):
         self.toggleMagnet()
         sleep(.5)
         self.toggleArm()
-        sleep(.5)
+        sleep(2)
 
         print("The Package is secure")
 
-        if not andrew:
+        if andrew:
             self.setArmPosition(upperTowerPosition)
-            sleep(.5)
-            self.toggleSmallArm()
+            sleep(1)
+            self.toggleArm()
             sleep(.5)
             self.toggleMagnet()
             sleep(.5)
-            self.toggleSmallArm()
+            self.toggleArm()
+
         else:
             self.setArmPosition(lowerTowerPosition)
-            sleep(.5)
+            sleep(2)
             self.toggleArm()
             sleep(.5)
             self.toggleMagnet()
