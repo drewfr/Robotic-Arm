@@ -97,7 +97,7 @@ class MainScreen(Screen):
     def debounce(self):
         processInput = False
         currentTime = time.clock()
-        if ((currentTime - self.lastClick) > DEBOUNCE):
+        if (currentTime - self.lastClick) > DEBOUNCE:
             processInput = True
         self.lastClick = currentTime
         return processInput
@@ -133,12 +133,12 @@ class MainScreen(Screen):
     def auto(self):
         print("Run the arm automatically here")
 
-        andrew = False
+        ballatuppertower = False
 
         if cyprus.read_gpio() & 0b0001:
             self.setArmPosition(lowerTowerPosition)
             sleep(2)
-            andrew = True
+            ballatuppertower = True
         else:
             self.setArmPosition(upperTowerPosition)
             sleep(2)
@@ -154,7 +154,7 @@ class MainScreen(Screen):
 
         print("The Package is secure")
 
-        if andrew:
+        if ballatuppertower:
             self.setArmPosition(upperTowerPosition)
             sleep(1)
             self.toggleArm()
