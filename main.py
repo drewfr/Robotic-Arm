@@ -80,7 +80,7 @@ arm = stepper(port=0, micro_steps=32, hold_current=20, run_current=20, accel_cur
 # //                       MAIN FUNCTIONS                       //
 # //             SHOULD INTERACT DIRECTLY WITH HARDWARE         //
 # ////////////////////////////////////////////////////////////////
-#IF GO_UNTIL_PRESS DOES NOT WORK...SET ARM IN PRESS POSITION
+# IF GO_UNTIL_PRESS DOES NOT WORK...SET ARM IN PRESS POSITION
 class MainScreen(Screen):
     version = cyprus.read_firmware_version()
     armPosition = 0
@@ -184,8 +184,8 @@ class MainScreen(Screen):
 
     def homeArm(self):
         arm.go_until_press(0, 6400)
+        arm.set_as_home()
         print("Home Position Logged")
-        # arm.home(self.homeDirection)
 
     # sensor is in P7
     def isBallOnTallTower(self):
