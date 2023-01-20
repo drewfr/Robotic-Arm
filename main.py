@@ -47,8 +47,8 @@ COUNTERCLOCKWISE = 1
 ARM_SLEEP = 2.5
 DEBOUNCE = 0.10
 
-lowerTowerPosition = 32  # position of the lower tower
-upperTowerPosition = 54  # position of the upper tower
+lowerTowerPosition = 72  # position of the lower tower
+upperTowerPosition = 94  # position of the upper tower
 
 
 # ////////////////////////////////////////////////////////////////
@@ -165,7 +165,7 @@ class MainScreen(Screen):
 
         else:
             self.setArmPosition(lowerTowerPosition)
-            sleep(2)
+            sleep(1)
             self.toggleArm()
             sleep(.5)
             self.toggleMagnet()
